@@ -11,4 +11,9 @@ class TestController extends Controller
     {
         return response()->json(cms::all());
     }
+
+    public function show(cms $cms)
+    {
+        return response()->json($cms);
+    }
 }
