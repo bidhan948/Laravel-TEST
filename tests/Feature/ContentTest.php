@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\cms;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 
@@ -40,5 +41,22 @@ class ContentTest extends TestCase
             ->json();
 
         $this->assertEquals($this->cms->slug, $response['slug']);
+    }
+
+    public function test_cms_store()
+    {
+        $cms = cms::factory()->make();
+
+        $this->postJson(
+            route('cms.store'),
+            [
+                'name' => $cms->name,
+                'slug' => $cms->slug,
+                'description' => $cms->description
+            ]
+        )->assertCreated()->json();
+
+
+        $this->assertDatabaseHas('cms', ['slug' => $cms->slug]);
     }
 }
