@@ -16,10 +16,15 @@ class ContentTest extends TestCase
      */
     public function test_cms_index(): void
     {
-        cms::create(['name' => 'Randoom', 'slug' => Str::slug('this is title'), 'description' => Str::random(30)]);
+        // Action
+        // cms::create(['name' => 'Randoom', 'slug' => Str::slug('this is title'), 'description' => Str::random(30)]);
 
+        $cms = cms::factory()->create();
+
+        // Act
         $response = $this->getJson(route('cms-json'));
 
+        // Assert
         $this->assertEquals(1, count($response->json()));
     }
 }
