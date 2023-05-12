@@ -102,8 +102,4 @@ class ContentTest extends TestCase
             ->assertJsonValidationErrors(['name']);
     }
 
-    public function createCMS($args = [])
-    {
-        return cms::factory()->create($args);
-    }
 }
