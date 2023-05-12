@@ -23,4 +23,18 @@ class TestController extends Controller
         $request->validate(['name' => 'required', 'slug' => 'required']);
         return response()->json(cms::create($request->all()), Response::HTTP_CREATED);
     }
+
+    public function destroy(cms $cms)
+    {
+        $cms->delete();
+
+        return response('', Response::HTTP_NO_CONTENT);
+    }
+
+    public function update(cms $cms,Request $request)
+    {
+
+        $request->validate(['name'=>'required']);
+        return response()->json($cms->update(['name' => 'This is test']));
+    }
 }

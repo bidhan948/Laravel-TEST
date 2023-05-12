@@ -27,7 +27,7 @@ class ContentTest extends TestCase
         // $cms = cms::factory()->create();
 
         // Act
-        $response = $this->getJson(route('cms-json'));
+        $response = $this->getJson(route('cms.index'));
 
         // Assert
         $this->assertEquals(1, count($response->json()));
@@ -67,5 +67,39 @@ class ContentTest extends TestCase
         $this->postJson(route('cms.store'))
             ->assertUnprocessable()
             ->assertJsonValidationErrors(['name', 'slug']);
+    }
+
+    public function test_cms_delete()
+    {
+        $this->deleteJson(route('cms.destroy', $this->cms))
+            ->assertNoContent();
+
+        $this->assertDatabaseMissing('cms', ['slug' => $this->cms->slug]);
+    }
+
+    public function test_cms_update()
+    {
+        $this->putJson(route('cms.update', $this->cms), [
+            'name' => 'This is test',
+        ])
+            ->assertOk();
+
+
+        $this->assertDatabaseHas(
+            'cms',
+            [
+                'id' => $this->cms->id,
+                'name' => 'This is test'
+            ]
+        );
+    }
+
+    public function test_cms_update_validation()
+    {
+        $this->withExceptionHandling();
+
+        $this->putJson(route('cms.update', $this->cms))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['name']);
     }
 }
