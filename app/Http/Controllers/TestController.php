@@ -8,14 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TestController extends Controller
 {
-    public function cmsJSON()
+    public function index()
     {
         return response()->json(cms::all());
     }
 
-    public function show(cms $cms)
+    public function show(cms $cm)
     {
-        return response()->json($cms);
+        return response()->json($cm);
     }
 
     public function store(Request $request)
@@ -24,17 +24,17 @@ class TestController extends Controller
         return response()->json(cms::create($request->all()), Response::HTTP_CREATED);
     }
 
-    public function destroy(cms $cms)
+    public function destroy(cms $cm)
     {
-        $cms->delete();
+        $cm->delete();
 
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function update(cms $cms,Request $request)
+    public function update(cms $cm,Request $request)
     {
 
         $request->validate(['name'=>'required']);
-        return response()->json($cms->update(['name' => 'This is test']));
+        return response()->json($cm->update(['name' => 'This is test']));
     }
 }

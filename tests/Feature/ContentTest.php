@@ -18,7 +18,7 @@ class ContentTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->cms = cms::factory()->create();
+        $this->cms = $this->createCMS();
     }
 
     public function test_cms_index(): void
@@ -35,7 +35,6 @@ class ContentTest extends TestCase
 
     public function test_cms_show()
     {
-
         $response = $this->getJson(route('cms.show', $this->cms))
             ->assertOk()
             ->json();
@@ -101,5 +100,10 @@ class ContentTest extends TestCase
         $this->putJson(route('cms.update', $this->cms))
             ->assertUnprocessable()
             ->assertJsonValidationErrors(['name']);
+    }
+
+    public function createCMS($args = [])
+    {
+        return cms::factory()->create($args);
     }
 }
