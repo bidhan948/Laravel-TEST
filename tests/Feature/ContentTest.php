@@ -59,4 +59,13 @@ class ContentTest extends TestCase
 
         $this->assertDatabaseHas('cms', ['slug' => $cms->slug]);
     }
+
+    public function test_cms_store_validation()
+    {
+        $this->withExceptionHandling();
+
+        $this->postJson(route('cms.store'))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['name', 'slug']);
+    }
 }
