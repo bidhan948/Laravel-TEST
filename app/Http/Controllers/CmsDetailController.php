@@ -22,4 +22,11 @@ class CmsDetailController extends Controller
 
         return response()->json($cm->cmsDetails()->create($request->all()), Response::HTTP_CREATED);
     }
+
+    public function update(Request $request,cms_detail $cms_detail)
+    {
+        $request->validate(['name' => 'required']);
+
+        return response()->json($cms_detail->update($request->all()));
+    }
 }

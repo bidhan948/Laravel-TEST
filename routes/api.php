@@ -7,4 +7,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::apiResource('cms', TestController::class);
-Route::apiResource('cms.cms_detail', CmsDetailController::class);
+Route::apiResource('cms.cms_detail', CmsDetailController::class)
+    ->except('show')
+    ->shallow();

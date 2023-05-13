@@ -48,4 +48,26 @@ class CmsDetailTest extends TestCase
             ->assertUnprocessable()
             ->assertJsonValidationErrors(['name']);
     }
+
+    public function test_cms_detail_update(): void
+    {
+        $cms_detail = $this->createCmsDetail();
+
+        $this->putJson(route('cms_detail.update', $cms_detail), [
+            'name' => 'This is test',
+        ])->assertOk();
+
+        $this->assertDatabaseHas('cms_details', ['name' => 'This is test']);
+    }
+
+    public function test_cms_detail_update_validation(): void
+    {
+        $this->withExceptionHandling();
+        
+        $cms_detail = $this->createCmsDetail();
+
+        $this->putJson(route('cms_detail.update', $cms_detail))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['name']);
+    }
 }
