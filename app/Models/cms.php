@@ -16,4 +16,13 @@ class cms extends Model
     {
         return $this->hasMany(cms_detail::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function ($cm) {
+            $cm->cmsDetails->each->delete();
+        });
+    }
 }

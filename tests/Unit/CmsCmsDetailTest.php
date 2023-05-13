@@ -26,4 +26,17 @@ class CmsCmsDetailTest extends TestCase
 
         $this->assertInstanceOf(cms::class, $cms_detail->Cms);
     }
+
+    public function test_if_cms_is_deleted_then_cms_detail_will_be_deleted()
+    {
+        $cms = $this->createCMS();
+        $cms_detail = $this->createCmsDetail(['cms_id' => $cms->id]);
+        $cms_detail_loc = $this->createCmsDetail();
+
+        $cms->delete();
+
+        $this->assertDatabaseMissing('cms', ['id' => $cms->id]);
+        $this->assertDatabaseMissing('cms_details', ['id' => $cms_detail->id]);
+        $this->assertDatabaseHas('cms_details', ['id' => $cms_detail_loc->id]);
+    }
 }

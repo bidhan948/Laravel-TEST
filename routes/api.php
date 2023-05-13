@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CmsDetailController;
 use App\Http\Controllers\TestController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
