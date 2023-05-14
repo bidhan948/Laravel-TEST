@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CmsDetailController;
 use App\Http\Controllers\TestController;
@@ -13,3 +14,6 @@ Route::apiResource('cms.cms_detail', CmsDetailController::class)
 
 Route::post('user/register', RegisterController::class)
     ->name('user.register');
+
+Route::post('user', LoginController::class)
+    ->name('user.login');
