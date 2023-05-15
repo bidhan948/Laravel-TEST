@@ -6,6 +6,7 @@ use App\Models\cms;
 use App\Models\cms_detail;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\Sanctum\Sanctum;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -18,18 +19,23 @@ abstract class TestCase extends BaseTestCase
         $this->withoutExceptionHandling();
     }
 
-    public function createCMS($args = [])
+    public function createCMS($args = []): cms
     {
         return cms::factory()->create($args);
     }
 
-    public function createCmsDetail($args = [])
+    public function createCmsDetail($args = []): cms_detail
     {
         return cms_detail::factory()->create($args);
     }
 
-    public function createUser($args = [])
+    public function createUser($args = []): User
     {
         return User::factory()->create($args);
+    }
+
+    public function authUser()
+    {
+        return Sanctum::actingAs($this->createUser());
     }
 }

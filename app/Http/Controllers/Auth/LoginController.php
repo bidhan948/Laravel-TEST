@@ -16,8 +16,8 @@ class LoginController extends Controller
 
         $user = User::query()->whereEmail($validate['email'])->first();
 
-        if ($user == null || Hash::check($validate['password'], $user->password)) {
-            return response()->josn('Credential Did not match', Response::HTTP_UNAUTHORIZED);
+        if ($user == null || !(Hash::check($validate['password'], $user->password))) {
+            return response()->json('Credential Did not match', Response::HTTP_UNAUTHORIZED);
         } else {
             return response()->json(['token' => ($user->createToken('mobile:' . $user->email)->plainTextToken)]);
         }

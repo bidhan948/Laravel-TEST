@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -20,5 +21,23 @@ class LoginTest extends TestCase
         ])->assertOk()->json();
 
         $this->assertArrayHasKey('token', $response);
+    }
+
+    public function test_if_user_email_is_wrong_then_throw_error(): void
+    {
+        $this->postJson(route('user.login'), [
+            'email' => 'bidhanbaniya789@gmail.com',
+            'password' => 'password'
+        ])->assertStatus(401);
+    }
+
+    public function test_if_user_password_is_wrong_then_throw_error(): void
+    {
+        $user = $this->createUser();
+
+        $this->postJson(route('user.login'), [
+            'email' => $user->email,
+            'password' => 'nopassword'
+        ])->assertUnauthorized();
     }
 }

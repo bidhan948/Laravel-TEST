@@ -18,6 +18,7 @@ class ContentTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->authUser();
         $this->cms = $this->createCMS();
     }
 

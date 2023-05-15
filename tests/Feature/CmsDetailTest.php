@@ -12,6 +12,12 @@ class CmsDetailTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->authUser();
+    }
+
     public function test_cms_detail_index(): void
     {
         $cms = $this->createCMS();
@@ -63,7 +69,7 @@ class CmsDetailTest extends TestCase
     public function test_cms_detail_update_validation(): void
     {
         $this->withExceptionHandling();
-        
+
         $cms_detail = $this->createCmsDetail();
 
         $this->putJson(route('cms_detail.update', $cms_detail))
