@@ -14,23 +14,24 @@ class ContentTest extends TestCase
     use RefreshDatabase;
 
     private $cms;
+    private $user;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->authUser();
+        $this->user = $this->authUser();
         $this->cms = $this->createCMS();
     }
 
     public function test_cms_index(): void
     {
-        // Action
-        // $cms = cms::factory()->create();
+        //ACTION
+        $this->createCMS(['user_id' => $this->user->id]);
 
-        // Act
+        //ACT
         $response = $this->getJson(route('cms.index'));
 
-        // Assert
+        //ASSERT
         $this->assertEquals(1, count($response->json()));
     }
 
@@ -102,5 +103,4 @@ class ContentTest extends TestCase
             ->assertUnprocessable()
             ->assertJsonValidationErrors(['name']);
     }
-
 }

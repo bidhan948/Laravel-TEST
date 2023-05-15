@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,10 @@ class CMSFactory extends Factory
         return [
             'name' => $this->faker->name,
             'slug' => $this->faker->slug,
-            'description' => $this->faker->sentence()
+            'description' => $this->faker->sentence(),
+            'user_id' => function () {
+                return User::factory()->create()->id;
+            }
         ];
     }
 }

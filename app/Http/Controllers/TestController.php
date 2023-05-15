@@ -10,7 +10,7 @@ class TestController extends Controller
 {
     public function index()
     {
-        return response()->json(cms::all());
+        return response()->json(auth()->user()->Cms);
     }
 
     public function show(cms $cm)
@@ -21,7 +21,11 @@ class TestController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name' => 'required', 'slug' => 'required']);
-        return response()->json(cms::create($request->all()), Response::HTTP_CREATED);
+
+        return response()->json(auth()
+            ->user()
+            ->Cms()
+            ->create($request->all()), Response::HTTP_CREATED);
     }
 
     public function destroy(cms $cm)
@@ -31,10 +35,10 @@ class TestController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function update(cms $cm,Request $request)
+    public function update(cms $cm, Request $request)
     {
 
-        $request->validate(['name'=>'required']);
+        $request->validate(['name' => 'required']);
         return response()->json($cm->update(['name' => 'This is test']));
     }
 }

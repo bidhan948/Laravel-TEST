@@ -28,7 +28,7 @@ class LoginTest extends TestCase
         $this->postJson(route('user.login'), [
             'email' => 'bidhanbaniya789@gmail.com',
             'password' => 'password'
-        ])->assertStatus(401);
+        ])->assertUnauthorized();
     }
 
     public function test_if_user_password_is_wrong_then_throw_error(): void
