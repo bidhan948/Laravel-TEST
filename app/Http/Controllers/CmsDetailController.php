@@ -18,12 +18,12 @@ class CmsDetailController extends Controller
 
     public function store(Request $request, cms $cm)
     {
-        $request->validate(['name' => 'required']);
+        $request->validate(['name' => 'required', 'user_category_id' => 'required']);
 
         return response()->json($cm->cmsDetails()->create($request->all()), Response::HTTP_CREATED);
     }
 
-    public function update(Request $request,cms_detail $cms_detail)
+    public function update(Request $request, cms_detail $cms_detail)
     {
         $request->validate(['name' => 'required']);
 

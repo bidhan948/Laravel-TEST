@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\cms;
 use App\Models\cms_detail;
+use App\Models\user_category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -34,11 +35,13 @@ class CmsDetailTest extends TestCase
     public function test_cms_detail_store(): void
     {
         $cms = $this->createCMS();
+        $user_category = $this->createUserCategory();
         $cms_detail = cms_detail::factory()->make();
 
         $this->postJson(route('cms.cms_detail.store', $cms), [
             'name' => $cms_detail->name,
-            'description' => $cms_detail->description
+            'description' => $cms_detail->description,
+            'user_category_id' => $user_category->id
         ])->assertCreated();
 
         $this->assertDatabaseHas('cms_details', ['name' => $cms_detail->name]);

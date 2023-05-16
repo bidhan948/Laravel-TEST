@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\cms;
+use App\Models\user_category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,11 +18,14 @@ class cms_detailFactory extends Factory
      */
     public function definition(): array
     {
+        $cms = cms::factory()->create();
+
         return [
             'name' => $this->faker->name,
             'description' => $this->faker->sentence,
-            'cms_id' => function () {
-                return cms::factory()->create()->id;
+            'cms_id' => $cms->id,
+            'user_category_id' => function () use ($cms) {
+                return user_category::factory()->create(['user_id' => $cms->user_id])->id;
             }
         ];
     }

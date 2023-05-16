@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedInteger('cms_id');
+            $table->foreignId('user_category_id')->constrained()->cascadeOnDelete();
             $table->text('description')->nullable();
             $table->timestamps();
         });
