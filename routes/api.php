@@ -18,6 +18,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('service/connect', [GoogleServiceController::class, 'connect'])
         ->name('service.connect');
+    Route::post('service/connect', [GoogleServiceController::class, 'callback'])
+        ->name('service.callback');
     Route::apiResource('cms', TestController::class);
     Route::apiResource('cms.cms_detail', CmsDetailController::class)
         ->except('show')
