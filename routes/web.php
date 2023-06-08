@@ -7,28 +7,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/drive', function () {
-    $client = new Client();
-    $client->setClientId('521002978912-jf9qp5lcifj34gdiutdpshffq42qtgkg.apps.googleusercontent.com');
-    $client->setClientSecret('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');
-    $client->setRedirectUri('http://localhost:8000/google-drive/callback');
-    $client->setScopes([
-        'https://www.googleapis.com/auth/drive',
-        'https://www.googleapis.com/auth/drive.file',
-    ]);
-    $url = $client->createAuthUrl();
-    return redirect($url);
-});
+// Route::get('/drive', function () {
+//     $client = new Client();
+//     $client->setClientId('521002978912-jf9qp5lcifj34gdiutdpshffq42qtgkg.apps.googleusercontent.com');
+//     $client->setClientSecret('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');
+//     $client->setRedirectUri('http://localhost:8000/google-drive/callback');
+//     $client->setScopes([
+//         'https://www.googleapis.com/auth/drive',
+//         'https://www.googleapis.com/auth/drive.file',
+//     ]);
+//     $url = $client->createAuthUrl();
+//     return redirect($url);
+// });
 
-Route::get('/google-drive/callback', function () {
-    $client = new Client();
-    $client->setClientId('521002978912-jf9qp5lcifj34gdiutdpshffq42qtgkg.apps.googleusercontent.com');
-    $client->setClientSecret('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');
-    $client->setRedirectUri('http://localhost:8000/google-drive/callback');
-    $code = request('code');
-    $access_token = $client->fetchAccessTokenWithAuthCode($code);
-    return $access_token;
-});
+// Route::get('/google-drive/callback', function () {
+//     $client = new Client();
+//     $client->setClientId('521002978912-jf9qp5lcifj34gdiutdpshffq42qtgkg.apps.googleusercontent.com');
+//     $client->setClientSecret('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');
+//     $client->setRedirectUri('http://localhost:8000/google-drive/callback');
+//     $code = request('code');
+//     $access_token = $client->fetchAccessTokenWithAuthCode($code);
+//     return $access_token;
+// });
 
 Route::get('upload', function () {
     $client = new Client();

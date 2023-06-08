@@ -22,6 +22,12 @@ class GoogleServiceTest extends TestCase
 
     public function test_if_user_can_connect_to_google_service(): void
     {
+        $this->mock(Client::class, function (MockInterface $mock) {
+            $mock->shouldReceive('setScopes');
+            $mock->shouldReceive('createAuthUrl')
+                ->andReturn('http://localhost:8000');
+        });
+
         $response = $this->getJson(route('service.connect'))
             ->assertOk()
             ->json();
@@ -32,9 +38,6 @@ class GoogleServiceTest extends TestCase
     public function test_if_user_google_service_acess_token_is_stored(): void
     {
         $this->mock(Client::class, function (MockInterface $mock) {
-            $mock->shouldReceive('setClientId')->once();
-            $mock->shouldReceive('setClientSecret')->once();
-            $mock->shouldReceive('setRedirectUri')->once();
             $mock->shouldReceive('fetchAccessTokenWithAuthCode')
                 ->andReturn('myCode');
         });

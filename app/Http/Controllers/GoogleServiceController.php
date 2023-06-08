@@ -22,32 +22,23 @@ class GoogleServiceController extends Controller
         $this->config = config('services.google');
     }
 
-    public function connect()
+    public function connect(Client $client)
     {
-        $client = new Client();
-        $client->setClientId($this->config['id']);
-        $client->setClientSecret($this->config['secret']);
-        $client->setRedirectUri($this->config['redirect_uri']);
         $client->setScopes(self::GOOGLE_SCOPE);
         $url = $client->createAuthUrl();
         return response()->json(['url' => $url]);
     }
 
-    public function callback(Request $request)
+    public function callback(Request $request, Client $client)
     {
         try {
-            $client = app(Client::class);
-            $client->setClientId($this->config['id']);
-            $client->setClientSecret($this->config['secret']);
-            $client->setRedirectUri($this->config['redirect_uri']);
             $code = $request->code;
             $access_token = $client->fetchAccessTokenWithAuthCode($code);
-
             $google_service = google_service::create(['token' => $access_token, 'user_id' => auth()->id()]);
-            
+
             return response()->json($google_service, Response::HTTP_CREATED);
         } catch (Exception $e) {
-            dd($e->getMessage());
+            return response()->json($e);
         }
     }
 }
