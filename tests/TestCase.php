@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Models\cms;
 use App\Models\cms_detail;
+use App\Models\google_service;
 use App\Models\User;
 use App\Models\user_category;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -43,5 +44,10 @@ abstract class TestCase extends BaseTestCase
     public function createUserCategory($args = [])
     {
         return user_category::factory()->create($args);
+    }
+
+    public function createGoogleService($args = [])
+    {
+        return google_service::factory()->create($args);
     }
 }
